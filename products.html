@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chaos Mystery Boxes - Products</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Chaos Mystery Boxes</h1>
+  <nav>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+</header>
+
+<section>
+  <h2>Our Products</h2>
+  <div class="products">
+    <!-- Product 1 -->
+    <div class="product">
+      <img src="images/product1.jpg" alt="Mystery Box 1">
+      <h3>Mellow Mini $20</h3>
+      <p>Perfect starter pack for any smoker who loves surprises. Every Mini box comes loaded with must have essentials like a new pipe, a grinder, rolling papers, smell proof bags, and a doob tube for on the go sessions. The best part is items vary in every single box so no two stoners get the same stash. Compact, affordable, and guaranteed to hit different every time.</p>
+      <label>Quantity:  
+		<input type="number" min="0" value="0" class="qty" data-price="20">
+		</label>
+		<p> </p>
+		<button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product">
+      <img src="images/product2.png" alt="Mystery Box 2">
+      <h3>Chill Classic $35</h3>
+      <p>Level up your smoke game. The Medium box has everything from the Mini plus a mix of curated snacks and drinks to crush those munchies when they hit. Every box is different so you will always unwrap a fresh mix of smoke gear and goodies. Think of it as your all in one smoke sesh survival kit. You do not just open this box you unlock a whole vibe.</p>
+      <label>Quantity:
+        <input type="number" min="0" value="0" class="qty" data-price="35">
+      </label>
+		<p> </p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product">
+      <img src="images/product3.png" alt="Mystery Box 3">
+      <h3>High-Key Deluxe $80</h3>
+      <p>Go big or do not bother. The Large box is the ultimate stoner experience stacked with a variety of smoking essentials, snacks, and drinks that switch up every time. Whether you are chilling solo or lighting up with the crew this box makes sure you have it all. Every Large box is different, every unboxing is a surprise, and every sesh is next level.</p>
+      <label>Quantity:
+        <input type="number" min="0" value="0" class="qty" data-price="80">
+      </label>
+		<p> </p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+
+  <button id="viewCart" class="btn">View Cart</button>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> Chaos Mystery Boxes</p>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Get existing cart or start fresh
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart')) || [];
+}
+
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Handle Add to Cart
+document.querySelectorAll('.add-to-cart').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const product = btn.closest('.product');
+    const qtyInput = product.querySelector('.qty');
+    const qty = parseInt(qtyInput.value);
+
+    if (qty > 0) {
+      const name = product.querySelector('h3').textContent;
+      const price = parseFloat(qtyInput.dataset.price);
+
+      let cart = getCart();
+
+      // Check if item already in cart
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ name, price, qty });
+      }
+
+      saveCart(cart);
+      alert(`${qty} × ${name} added to cart!`);
+      qtyInput.value = 0; // reset input
+    } else {
+      alert("Please select a quantity greater than 0.");
+    }
+  });
+});
+
+// View Cart button
+document.getElementById('viewCart').addEventListener('click', () => {
+  window.location.href = 'cart.html';
+});
+</script>
+
+</body>
+</html>

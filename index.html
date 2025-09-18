@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaos Mystery Boxes - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Welcome to Chaos Mystery Boxes!</h1>
+  </header>
+
+  <section>
+    <p>Ready to unwrap the unexpected? Dive into the chaos of mystery and surprise!</p>
+	<img src="images/logo1.png" alt="Chaos Mystery Boxes" width="500" height="500" class="center-img">
+   <!-- Age Verification Modal -->
+<div id="ageModal" style="text-align: center;">
+<div id="ageModalContent">
+<h2>Age Verification</h2>
+<p>You must be 21 years or older to enter this site.</p>
+<button onclick="verifyAge(true)" class="btn">I am 21 or older</button>
+<button onclick="verifyAge(false)" class="btn">I am under 21</button>
+</div>
+</div>
+
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+
+function verifyAge(isOldEnough) {
+if(isOldEnough) {
+location.href = "products.html";
+} else {
+alert("You must be 21 or older to enter this site.");
+window.location.href = "https://www.google.com";
+}
+}
+</script>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Chaos Mystery Boxes</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chaos Mystery Boxes - Cart</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .cart-item { margin: 10px 0; padding: 8px; border-bottom: 1px solid #ccc; }
+  .cart-item button { margin-left: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Chaos Mystery Boxes</h1>
+  <nav>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+</header>
+
+<section>
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+
+  <p id="subtotal"></p>
+  <p id="tax"></p>
+  <p id="shipping"></p>
+  <p id="total"></p>
+
+  <button id="clearCart" class="btn">Clear Cart</button>
+<p> </p>
+  <!-- PayPal Checkout -->
+  <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="hdhigg1213@gmail.com">
+    <input type="hidden" name="item_name" value="Chaos Mystery Boxes">
+    <input type="hidden" name="amount" id="paypalAmount" value="">
+    <input type="hidden" name="currency_code" value="USD">
+    <button type="submit" class="btn">Pay with PayPal</button>
+  </form>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> Chaos Mystery Boxes</p>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const taxRate = 0.07; // 7% tax
+const shipping = 5; // flat rate
+
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function renderCart() {
+  const cart = getCart();
+  const cartDiv = document.getElementById('cartItems');
+  cartDiv.innerHTML = ''; // clear previous
+
+  let subtotal = 0;
+
+  if (cart.length === 0) {
+    cartDiv.textContent = "Your cart is empty.";
+  } else {
+    cart.forEach((item, index) => {
+      subtotal += item.price * item.qty;
+
+      const div = document.createElement('div');
+      div.classList.add('cart-item');
+      div.innerHTML = `
+        ${item.name} x ${item.qty} = $${(item.price * item.qty).toFixed(2)}
+        <button class="remove-btn" data-index="${index}">Remove</button>
+      `;
+      cartDiv.appendChild(div);
+    });
+  }
+
+  const tax = subtotal * taxRate;
+  const total = cart.length > 0 ? subtotal + tax + shipping : 0;
+
+  document.getElementById('subtotal').textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+  document.getElementById('tax').textContent = `Tax: $${tax.toFixed(2)}`;
+  document.getElementById('shipping').textContent = cart.length > 0 ? `Shipping: $${shipping.toFixed(2)}` : "Shipping: $0.00";
+  document.getElementById('total').textContent = `Total: $${total.toFixed(2)}`;
+
+  document.getElementById('paypalAmount').value = total.toFixed(2);
+
+  // Attach remove handlers
+  document.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      let updatedCart = getCart();
+      updatedCart.splice(idx, 1);
+      saveCart(updatedCart);
+      renderCart();
+    });
+  });
+}
+
+// Clear cart button
+document.getElementById('clearCart').addEventListener('click', () => {
+  if (confirm("Are you sure you want to clear your cart?")) {
+    saveCart([]);
+    renderCart();
+  }
+});
+
+renderCart();
+</script>
+
+</body>
+</html>

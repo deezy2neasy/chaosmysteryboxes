@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaos Mystery Boxes - About</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Chaos Mystery Boxes</h1>
+    <nav>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+	<a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>About Us</h2>
+    <p>My name is Heather and I’ve always had a soft spot for animals, especially ferrets. Ferrets are often sold in pet stores as “cute and exotic,” but people don’t always realize how much work they are. Once the novelty wears off, many owners surrender them when they realize ferrets aren’t low-maintenance like a hamster. Running a small ferret rescue with my family has shown me how much love, chaos, and care these little ones need. Vet care is expensive since they often need exotic vets, not regular small animal vets, and they’re prone to adrenal disease, insulinoma, and cancers. Since ferrets only live 5–8 years, some people abandon older ferrets when health issues start, rather than paying for treatment. To help support my ferrets I started creating mystery boxes that bring joy and surprise to others while also helping fund the rescue. Every box is put together with care, fun, and a little bit of chaos because life and ferrets are never boring. When you buy a box you’re not just getting cool items, you’re also helping me keep the rescue going strong.</p>
+	  <div class="slideshow-container">
+
+  <div class="slide fade">
+    <img src="images/about1.jpeg" alt="About photo 1">
+  </div>
+
+  <div class="slide fade">
+    <img src="images/about2.jpeg" alt="About photo 2">
+  </div>
+
+  <div class="slide fade">
+    <img src="images/about3.jpeg" alt="About photo 3">
+  </div>
+		  
+  <div class="slide fade">
+    <img src="images/about4.jpeg" alt="About photo 43">
+  </div>
+		  <div class="slide fade">
+    <img src="images/about5.jpeg" alt="About photo 5">
+  </div>
+		  <div class="slide fade">
+    <img src="images/about6.jpeg" alt="About photo 6">
+  </div>
+		  <div class="slide fade">
+    <img src="images/about7.jpeg" alt="About photo 7">
+  </div>
+		  <div class="slide fade">
+    <img src="images/about8.jpeg" alt="About photo 8">
+  </div>
+		  
+
+  <!-- Next/Prev buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+
+<!-- Dots (navigation) -->
+<div class="dots" style="text-align:center;">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Chaos Mystery Boxes</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+	<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+// Auto slideshow (optional)
+setInterval(() => {
+  plusSlides(1);
+}, 5000); // change every 5s
+</script>
+</body>
+</html>
