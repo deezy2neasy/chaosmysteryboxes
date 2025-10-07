@@ -31,17 +31,59 @@
   <p id="shipping"></p>
   <p id="total"></p>
 
+<div id="cart">
+  <div class="product" data-price="29.99">
+    <span class="name">Chaos Mystery Box 1</span>
+    <input type="number" class="qty" value="1" min="0">
+  </div>
+  <div class="product" data-price="39.99">
+    <span class="name">Chaos Mystery Box 2</span>
+    <input type="number" class="qty" value="0" min="0">
+  </div>
+  <div class="product" data-price="19.99">
+    <span class="name">Chaos Mystery Box 3</span>
+    <input type="number" class="qty" value="0" min="0">
+  </div>
+  <div class="product" data-price="49.99">
+    <span class="name">Chaos Mystery Box 4</span>
+    <input type="number" class="qty" value="0" min="0">
+  </div>
+  <p>Total: $<span id="cartTotal">0.00</span></p>
+</div>
+
+<!-- PayPal Form -->
+<form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="Hdhiggs1213@gmail.com">
+  <input type="hidden" name="item_name" value="Chaos Mystery Boxes">
+  <input type="hidden" name="amount" id="paypalAmount" value="0.00">
+  <input type="hidden" name="currency_code" value="USD">
+  <button type="submit" class="btn">Pay with PayPal</button>
+</form>
+
+<script>
+function updateCartTotal() {
+  let total = 0;
+  document.querySelectorAll('#cart .product').forEach(product => {
+    const price = parseFloat(product.dataset.price);
+    const qty = parseInt(product.querySelector('.qty').value) || 0;
+    total += price * qty;
+  });
+  document.getElementById('cartTotal').textContent = total.toFixed(2);
+  document.getElementById('paypalAmount').value = total.toFixed(2);
+}
+
+// Update total on quantity change
+document.querySelectorAll('#cart .qty').forEach(input => {
+  input.addEventListener('input', updateCartTotal);
+});
+
+// Initialize total on page load
+updateCartTotal();
+</script>  
   <button id="clearCart" class="btn">Clear Cart</button>
 <p> </p>
-  <!-- PayPal Checkout -->
-  <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-    <input type="hidden" name="cmd" value="_xclick">
-    <input type="hidden" name="business" value="Hdhiggs1213@gmail.com">
-    <input type="hidden" name="item_name" value="Chaos Mystery Boxes">
-    <input type="hidden" name="amount" id="paypalAmount" value="">
-    <input type="hidden" name="currency_code" value="USD">
-    <button type="submit" class="btn">Pay with PayPal</button>
-  </form>
+  
 </section>
 
 <footer>
@@ -54,10 +96,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const taxRate = 0.07; // 7% tax
 const shipping = 5; // flat rate
 
-document.getElementById('paypalForm').addEventListener('submit', function() {
-  const total = calculateCartTotal(); // Your function
-  document.getElementById('paypalAmount').value = total.toFixed(2);
-});
 function getCart() {
   return JSON.parse(localStorage.getItem('cart') || '[]');
 }
