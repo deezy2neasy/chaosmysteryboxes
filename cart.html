@@ -36,7 +36,7 @@
   <!-- PayPal Checkout -->
   <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
     <input type="hidden" name="cmd" value="_xclick">
-    <input type="hidden" name="business" value="hdhiggs1213@gmail.com">
+    <input type="hidden" name="business" value="Hdhiggs1213@gmail.com">
     <input type="hidden" name="item_name" value="Chaos Mystery Boxes">
     <input type="hidden" name="amount" id="paypalAmount" value="">
     <input type="hidden" name="currency_code" value="USD">
@@ -54,6 +54,10 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const taxRate = 0.07; // 7% tax
 const shipping = 5; // flat rate
 
+document.getElementById('paypalForm').addEventListener('submit', function() {
+  const total = calculateCartTotal(); // Your function
+  document.getElementById('paypalAmount').value = total.toFixed(2);
+});
 function getCart() {
   return JSON.parse(localStorage.getItem('cart') || '[]');
 }
