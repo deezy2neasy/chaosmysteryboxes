@@ -46,6 +46,7 @@
   <input type="hidden" name="item_name" value="Chaos Mystery Boxes">
   <input type="hidden" name="amount" id="paypalAmount" value="0.00">
   <input type="hidden" name="currency_code" value="USD">
+  <input type="hidden" name="custom" id="paypalCustom" value="">
   <button type="submit" class="btn">Pay with PayPal</button>
 </form>
 
@@ -146,6 +147,25 @@ document.getElementById('clearCart').addEventListener('click', () => {
 });
 
 renderCart();
+// Save pet choice
+document.querySelectorAll('input[name="pet"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    localStorage.setItem('petPreference', radio.value);
+  });
+});
+
+// Load saved choice if available
+const savedPet = localStorage.getItem('petPreference');
+if (savedPet) {
+  document.querySelector(`input[name="pet"][value="${savedPet}"]`).checked = true;
+}
+
+// Before PayPal form submit, attach pet preference to hidden field
+document.getElementById('paypalForm').addEventListener('submit', () => {
+  const petPref = localStorage.getItem('petPreference') || "Not specified";
+  document.getElementById('paypalCustom').value = `Pet: ${petPref}`;
+});
+  
 </script>
 
 </body>
